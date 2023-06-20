@@ -1,0 +1,106 @@
+﻿@model soFine.Models.SkinProduct
+@{
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Create";
+}
+
+<style>
+    .container {
+        display: flex;
+        align-items: center;
+        
+    }
+
+    .box {
+        width: 500px;
+        height: 700px;
+        border: 2px solid #bc8f8f;
+        margin-right: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        margin-top: 10px;
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="box">
+            <h2 class="text-uppercase text-center mb-5">Add a skin product</h2>
+            <form>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-20">
+                        @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-20">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SkinType, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-20">
+                        <select id="skin-type" name="SkinType">
+                            <option value="">Skin type</option>
+                            @foreach (string skinType in ViewBag.SkinTypes)
+                            {
+                                <option value="@skinType">@skinType</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-20">
+                        <select id="category" name="Category">
+                            <option value="">Category</option>
+                            @foreach (string categories in ViewBag.skinproductcategories)
+                            {
+                                <option value="@categories">@categories</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Image Url")
+                    @Html.TextBoxFor(m => m.ImageUrl, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ImageUrl)
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-20">
+                        <input type="submit" value="ADD" class="btn  btn-primary" />
+                    </div>
+                </div>
+                <div>
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </form>
+
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

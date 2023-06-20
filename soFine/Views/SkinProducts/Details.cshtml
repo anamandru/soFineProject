@@ -1,0 +1,92 @@
+﻿@model soFine.Models.SkinProduct
+@{
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Details";
+}
+
+<style>
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        margin-top: 10px;
+        position: center;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+</style>
+
+<div class="container">
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3 class="text-uppercase text-center mb-5">Details about product</h3>
+            <div class="col-sm-20">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ProductName)
+                </dd>
+            </div>
+
+            <div class="col-sm-20">
+                <dd>
+                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ImageData)" alt="Image" class="img-fluid" width="300" height="200">
+                </dd>
+            </div>
+
+            <div class="col-sm-20">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Category)
+                </dd>
+            </div>
+
+            <div class="col-sm-20">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+            </div>
+
+            <div class="col-sm-20">
+                <dt>
+                    @Html.DisplayNameFor(model => model.SkinType)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SkinType)
+                </dd>
+            </div>
+
+            <div class="col-sm-20">
+
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                    @Html.ActionLink("Back to List", "Index")
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>

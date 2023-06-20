@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/User/Layout2.cshtml";
+}
+@{
+    ViewBag.Title = "HairQuiz";
+}
+<style>
+    .container {
+        align-content: center;
+        display: flex;
+        background-color: white;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 5px;
+        flex-direction: column;
+    }
+
+    .ans {
+        margin-bottom: 10px;
+    }
+
+    .radio-label {
+        display: inline-block;
+        margin-left: 10px;
+        color: #bc8f8f;
+    }
+
+    input[type="radio"] {
+        accent-color: #bc8f8f;
+    }
+</style>
+<h2>Answer the following questions to determine your hair type!</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+@using (Html.BeginForm("HairQuiz", "User", new { Id = ViewBag.UserId }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        @for (int i = 0; i < 5; i++)
+        {
+            <h2 class="mt-1 ml-2">@ViewBag.Questions[i]</h2>
+
+            for (int j = 0; j < 4; j++)
+            {
+                <div class="ans ml-2">
+                    <input type="radio" id="Question@(i + 1)_@(j + 1)" name="Question@(i + 1)" value="@ViewBag.Answers[j + 4 * i]" />
+                    <label class="radio-label" for="Question@(i + 1)_@(j + 1)">@ViewBag.Answers[j + 4 * i]</label>
+                </div>
+            }
+
+        }
+
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+
+}

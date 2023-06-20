@@ -1,0 +1,296 @@
+﻿@model soFine.Models.UserAccount
+
+@{
+    Layout = "~/Views/User/Layout2.cshtml";
+}
+
+@{
+    ViewBag.Title = "Home";
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" integrity="sha512-SoDjgim1zPzPzgrv25zT57Bxqs5l5A3g7gEfiisOM2q0dMfnZx/Qp7If3g6F2C9LoXyj6AFv8qXXw3gmSS+jOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .container {
+            display: flex;
+            width: 1400px;
+            height:auto;
+
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            text-align: left;
+            vertical-align: top;
+            width: 500px;
+        }
+
+        .name-style {
+            font-weight: bold;
+        }
+
+        .custom-btn {
+            background-color: #bc8f8f;
+            color: white;
+        }
+
+        .box {
+            width: 700px;
+            height: auto;
+            margin-top: 40px;
+            margin-right: 40px;
+            border: 3px solid #bc8f8f;
+            display: flex;
+            
+            align-items: center;
+            background: white;
+        }
+        #flex {
+            flex-direction: column;
+        }
+    </style>
+</head>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <table>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+
+                            @if (Model.SkinType == "normal")
+                            {
+                                <img src="~/Pictures/normal.jpg" alt="Image" class="img-fluid" width="500" height="200">
+                            }
+                            else if (Model.SkinType == "dry")
+                            {
+                                <img src="~/Pictures/dry.jpg" alt="Image" class="img-fluid" width="500" height="200">
+                            }
+                            else if (Model.SkinType == "oily")
+                            {
+                                <img src="~/Pictures/oily.jpg" alt="Image" class="img-fluid" width="500" height="200">
+                            }
+                            else if (Model.SkinType == "combination")
+                            {
+                                <img src="~/Pictures/combination.jpg" alt="Image" class="img-fluid" width="500" height="200">
+                            }
+                            else if (Model.SkinType == "sensitive")
+                            {
+                                <img src="~/Pictures/sensitive.jpg" alt="Image" class="img-fluid" width="500" height="200">
+                            }
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <div class="col-md-offset-2 col-md-20 text-left">
+                            <h3>@Model.FirstName  @Model.LastName</h3>
+
+                            <span class="name-style">@Html.DisplayNameFor(model => model.SkinType)</span>
+                            <span>: </span>
+                            @Html.DisplayFor(model => model.SkinType)<br />
+
+                            <span class="name-style">@Html.DisplayNameFor(model => model.HairType)</span>
+                            <span>: </span>
+                            @Html.DisplayFor(model => model.HairType).ToString().ToLower()<br />
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-20 ">
+                            <h3>How to know your skin type?</h3>
+                            <a href="@Url.Action("SkinQuiz", "User", new { id = Model.Id })" class="btn btn-default custom-btn">Skin quiz</a>
+
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-20 ">
+                            <h3>How to know your hair type?</h3>
+                            <a href="@Url.Action("HairQuiz", "User", new { id = Model.Id })" class="btn btn-default custom-btn">Hair quiz</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div  class="container">
+            <div id="flex" class="box">
+                <h3 style="font-size: 30px; font-style: italic;">Skin routine</h3>
+                <table>
+                    <tbody>
+                        @foreach (string cat in ViewBag.UserSkinCategories)
+                        {
+                            foreach (soFine.Models.SkinProduct skinProduct in ViewBag.SkinProducts)
+                            {
+                                if (skinProduct.Category == cat)
+                                {
+                                    <tr>
+                                        <td style="align-items:center;">
+                                            @if (cat == "Cleanser")
+                                            {
+                                                <img src="~/Pictures/Cleanser.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+                                            }
+                                            else if (cat == "Exfoliator")
+                                            {
+                                                <img src="~/Pictures/exfoliator.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+                                            }
+                                            else if (cat == "Treatment")
+                                            {
+                                                <img src="~/Pictures/tratament-fata.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+                                            }
+                                            else if (cat == "Serum")
+                                            {
+                                                <img src="~/Pictures/ser.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+                                            }
+                                            else if (cat == "Face Oil")
+                                            {
+                                                <img src="~/Pictures/Oil.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+                                            }
+                                            else if (cat == "Sunscreen")
+                                            {
+                                                <img src="~/Pictures/spf.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+                                            }
+                                            else if (cat == "Moisturizer")
+                                            {
+                                                <img src="~/Pictures/m.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+                                            }
+                                            else if (cat == "Toner")
+                                            {
+                                                <img src="~/Pictures/Toner.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+                                            }
+                                            else if (cat == "Face Mask")
+                                            {
+                                                <img src="~/Pictures/masca.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+                                            }
+                                            else if (cat == "Eye Cream")
+                                            {
+                                                <img src="~/Pictures/eyecream.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+                                            }
+                                        </td>
+                                        <td style="text-align:center; vertical-align:middle">
+                                            @skinProduct.ProductName
+                                        </td>
+                                        <td style="text-align:center; vertical-align:middle">
+                                            @using (Html.BeginForm("DeleteSkinProduct", "User", new { iduser = Model.Id, idprod = skinProduct.Id }, FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-default">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="flex" class="box">
+                <h3 style="font-size: 30px; font-style: italic;">Hair routine</h3>
+                <table>
+                    <tbody>
+                        @foreach (string cat in ViewBag.UserHairCategories)
+                        {
+
+                            foreach (soFine.Models.HairProduct hairProduct in ViewBag.HairProducts)
+                            {
+                                if (hairProduct.Category == cat)
+                                {
+                                    <tr>
+                                        <td style="align-items:center;">
+                                            @if (cat == "Shampoo")
+                                            {
+                                                <img src="~/Pictures/Shampoo.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+
+                                            }
+                                            else if (cat == "Conditioner")
+                                            {
+
+                                                <img src="~/Pictures/balasm.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+
+                                            }
+                                            else if (cat == "Dry Shampoo")
+                                            {
+
+                                                <img src="~/Pictures/dry.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+
+                                            }
+                                            else if (cat == "Heat protectant spray")
+                                            {
+
+                                                <img src="~/Pictures/protection.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+
+                                            }
+                                            else if (cat == "Oil")
+                                            {
+
+                                                <img src="~/Pictures/Oil.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+
+                                            }
+                                            else if (cat == "Hairspray")
+                                            {
+
+                                                <img src="~/Pictures/hairspray.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+
+                                            }
+                                            else if (cat == "Mask")
+                                            {
+
+                                                <img src="~/Pictures/masca-par.png" alt="Image" class="img-fluid" width="150" height="200" style="margin-right: 20px;">
+
+                                            }
+                                            else if (cat == "Serum")
+                                            {
+
+                                                <img src="~/Pictures/ser.png" alt="Image" class="img-fluid" width="100" height="200" style="margin-right: 20px;">
+
+                                            }
+                                        </td>
+                                        <td style="text-align:center; vertical-align:middle">
+                                            @hairProduct.ProductName
+                                        </td>
+                                        <td style="text-align:center; vertical-align:middle">
+                                            @using (Html.BeginForm("DeleteHairProduct", "User", new { iduser = Model.Id, idprod = hairProduct.Id }, FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-default">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

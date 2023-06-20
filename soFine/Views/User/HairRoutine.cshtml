@@ -1,0 +1,87 @@
+﻿@model List<soFine.Models.HairProduct>
+
+@{
+    ViewBag.Title = "HairRoutine";
+    Layout = "~/Views/User/Layout2.cshtml";
+}
+
+<h2>Hair Products</h2>
+
+@using (Html.BeginForm("HairRoutine", "User", new { Id = ViewBag.UserId }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    <label for="category-select">Select a category:</label>
+    <select id="category" name="Category">
+        <option value="">SELECT</option>
+        @foreach (string categories in ViewBag.hairproductcategories)
+        {
+            <option value="@categories">@categories</option>
+        }
+    </select>
+
+    <div id="products-container"></div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+    </div>
+
+}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    .middle-column {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .name-style {
+        font-weight: bold;
+    }
+</style>
+
+<table>
+    @{
+        int numColumns = 3;
+        int count = 0;
+    }
+
+    @foreach (var item in Model)
+    {
+        if (count % numColumns == 0)
+        {
+            if (count > 0)
+            {
+                @:</tr>
+            }
+            @:<tr>
+            }
+            <td class="align-middle">
+                <span class="name-style">@Html.DisplayFor(modelItem => item.ProductName)</span><br />
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.ImageData)" alt="Image" width="300" height="350"> <br />
+
+                <span class="name-style">@Html.DisplayNameFor(model => item.Category)</span>
+                <span>: </span>
+                @Html.DisplayFor(modelItem => item.Category)<br />
+
+                <span class="name-style">@Html.DisplayNameFor(model => item.HairType)</span>
+                <span>: </span>
+                @Html.DisplayFor(modelItem => item.HairType)<br />
+
+                @Html.ActionLink("Details", "HairProductDetails", new { Id = item.Id, iduser = ViewBag.UserId })
+            </td>
+            count++;
+        }
+</tr>
+</table>

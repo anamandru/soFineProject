@@ -1,0 +1,32 @@
+﻿@model List<soFine.Models.Question>
+@{
+    ViewBag.Title = "Questions";
+    Layout = "~/Views/User/Layout2.cshtml";
+    SoFineDB db = new SoFineDB();
+}
+
+
+<h2>Your questions</h2>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <a href="@Url.Action("AskQuestion", "User", new { id = ViewBag.UserId })" class="btn btn-primary">Ask a question</a>
+    </div>
+</div>
+
+@foreach (soFine.Models.Question question in Model)
+{
+    <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
+
+        <h5>@question.QuestionText</h5>
+
+        @if (question.AnswerText != null)
+        {
+            <h6>@question.AnsweredBy answered: @question.AnswerText</h6>
+        }
+        else
+        {
+        <h6>Not answered yet.</h6>
+        }
+    </div>
+}

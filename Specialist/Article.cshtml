@@ -1,0 +1,44 @@
+﻿
+@model soFine.Models.Article
+@{
+    ViewBag.Title = "Article";
+    Layout = "~/Views/Specialist/Layout2.cshtml";
+    SoFineDB db = new SoFineDB();
+}
+<style>
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        margin-top: 10px;
+        text-align:left;
+    }
+</style>
+<div class="container">
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3 class="text-center mb-5">@Model.Title</h3>
+            <div class="col-sm-20">
+                <div style="text-align:right;">
+                    <h4> written by @Model.Author</h4>
+                    @{
+                        soFine.Models.SpecialistAccount specialist = db.SpecialistAccounts.Find(Model.IdSpecialist);
+                    }
+                    <h5> and added by @specialist.FirstName @specialist.LastName</h5>
+                </div>
+
+                <h5 style="text-align:left;">     @Model.ArticleText</h5>
+
+            
+                <div>
+                    <a href="@Url.Action("FirstPage", "Specialist", new { id = ViewBag.SpecialistId })">Go back</a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>

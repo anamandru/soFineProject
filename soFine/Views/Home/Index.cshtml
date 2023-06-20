@@ -1,0 +1,144 @@
+﻿@model List<soFine.Models.Article>
+@{
+    ViewBag.Title = "Home Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+
+        body {
+            flex-direction: row;
+        }
+
+        .table {
+            background: #fff;
+            width: 27%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 0px 0px rgba(0,0,0,.0);
+            transform: translateY(0%);
+            transition: .3s;
+            margin: 0 30px;
+        }
+
+        .container {
+            display: flex;
+            margin-top: 40px;
+        }
+
+        .heading {
+            background: #bc8f8f;
+            padding: 20px;
+            text-align: center;
+            font-size: 15pt;
+            color: #272625;
+            text-transform: capitalize;
+        }
+
+        .btn {
+            font-style: italic;
+            display: block;
+            margin: 20px auto 30px;
+            width: 60%;
+            height: 50px;
+            background: #bc8f8f;
+            border: none;
+            border-radius: 50px;
+            transition: .3s;
+            overflow: hidden;
+        }
+
+            .btn p {
+                font-weight: bolder;
+                color: #fff;
+                font-size: 15pt;
+                text-align: center;
+                line-height: 40px;
+                font-family: 'Poppins', sans-serif;
+                text-transform: uppercase;
+                transform: translateX(0);
+                transition: all 600ms cubic-bezier(1, 0, 0, 1);
+            }
+
+            .btn span {
+                font-size: 30px;
+                transform: translate(-50%);
+                position: relative;
+                top: -55px;
+                left: -90%;
+                color: white;
+                transform: scale(1);
+                transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            .btn:hover span {
+                left: 0%;
+                transform: scale(1.5);
+            }
+
+            .btn:hover p {
+                transform: translateX(150%);
+            }
+
+        p {
+            text-align: left;
+            color: #272625;
+            font-weight: 600;
+        }
+
+        .box {
+            width: 800px;
+            border: 3px solid #bc8f8f;
+            margin-left: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="table" style="height: 400px;">
+            <h2 class="heading">SIGN UP AS USER</h2>
+            <img src="~/Pictures/client.png" alt="Image" class="img-fluid" width="350" height="350">
+
+            <a href="@Url.Action("SignupClient", "SignupClient")">
+                <button class="btn">
+                    <p>SIGN UP</p>
+                    <span class="fa fa-hand-o-right" aria-hidden="false"></span>
+                </button>
+                </button>
+            </a>
+
+        </div>
+        <div class="table" style=" height: 400px;">
+            <h2 class="heading">SIGN UP AS SPECIALIST</h2>
+            <img src="~/Pictures/specialist.png" alt="Image" class="img-fluid" width="350" height="350">
+
+            <a href="@Url.Action("SignupSpecialist", "SignupSpecialist")">
+                <button class="btn">
+                    <p>SIGN UP</p>
+                    <span class="fa fa-hand-o-right" aria-hidden="false"></span>
+                </button>
+
+            </a>
+        </div>
+        <div class="box" style="height: 600px;">
+            <h3>What's new in beauty?</h3>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div>
+                    @Html.ActionLink(Model[i].Title, "Article", new { id = Model[i].Id })
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

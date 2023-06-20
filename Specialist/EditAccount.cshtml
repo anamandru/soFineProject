@@ -1,0 +1,115 @@
+﻿@model soFine.Models.SpecialistAccount
+
+@{
+    Layout = "~/Views/Specialist/Layout2.cshtml";
+    ViewBag.Title = "EditAccount";
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+}
+
+<style>
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .box {
+        width: 500px;
+        height: 900px;
+        border: 2px solid #bc8f8f;
+        margin-top: 10px;
+        margin-right: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="box">
+            <h2 class="text-uppercase text-center mb-5">Edit the account</h2>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+                <div>
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label " })
+                <div>
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label " })
+                <div>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label " })
+                <div>
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CliniqueName, htmlAttributes: new { @class = "control-label " })
+                <div>
+                    @Html.EditorFor(model => model.CliniqueName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CliniqueName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.University, htmlAttributes: new { @class = "control-label " })
+                <div>
+                    @Html.EditorFor(model => model.University, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.University, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DiplomaNumber, htmlAttributes: new { @class = "control-label " })
+                <div>
+                    @Html.EditorFor(model => model.DiplomaNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DiplomaNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+
+            <div>
+                @Html.ActionLink("Go Back", "FirstPage", new { id = Model.Id })
+            </div>
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-success">@TempData["Message"]</div>
+            }
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

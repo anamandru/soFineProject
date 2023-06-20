@@ -1,0 +1,99 @@
+﻿@model soFine.Models.SkinProduct
+@{
+    ViewBag.Title = "SkinProductDetails";
+    Layout = "~/Views/User/Layout2.cshtml";
+}
+<style>
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        margin-top: 10px;
+        position: center;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+</style>
+
+
+@using (Html.BeginForm("SkinProductDetails", "User", new { id = Model.Id, iduser = ViewBag.UserId }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="container">
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3 class="text-uppercase text-center mb-5">Details about product</h3>
+            <div class="col-sm-20">
+
+                @if (ViewBag.Exists == false)
+                {
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-20">
+                            <input type="submit" value="Add to routine" style="float: right;" class="btn btn-primary" />
+                        </div>
+                    </div>
+
+                }
+                else if (ViewBag.Exists == true)
+                {
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-20">
+                            <input type="submit" value="Remove from routine" style="float: right;" class="btn btn-primary" />
+                        </div>
+                    </div>
+
+                }
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ProductName)
+                </dd>
+
+                <dd>
+                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ImageData)" alt="Image" class="img-fluid" width="300" height="200">
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Category)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SkinType)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SkinType)
+                </dd>
+
+                @Html.ActionLink("Back", "SkinRoutine", new { id = ViewBag.UserId })
+
+            </div>
+        </div>
+    </div>
+</div>
+ }

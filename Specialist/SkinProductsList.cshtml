@@ -1,0 +1,69 @@
+﻿@model IEnumerable<soFine.Models.SkinProduct>
+@{
+    Layout = "~/Views/Specialist/Layout2.cshtml";
+}
+@{
+    ViewBag.Title = "SkinProductsList";
+}
+
+<h2>Skin products</h2>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        align-content: center;
+        justify-content: center;
+    }
+
+    th, td {
+        align-content:center;
+        justify-content:center;
+
+    }
+
+    .name-style {
+        font-weight: bold;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+<p>
+    @Html.ActionLink("Create New", "AddSkinProduct",new {id=ViewBag.SpecialistId})
+</p>
+<table class="table">
+    @{
+        int numColumns = 3;
+        int count = 0;
+    }
+
+    @foreach (var item in Model)
+    {
+        if (count % numColumns == 0)
+        {
+            if (count > 0)
+            {
+                @:</tr>
+            }
+            @:<tr>
+            }
+            <td>
+                <span class="name-style">@Html.DisplayFor(modelItem => item.ProductName)</span><br />
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.ImageData)" alt="Image" class="img-fluid" width="300" height="200"> <br />
+
+                <span class="name-style">@Html.DisplayNameFor(model => model.Category)</span>
+                <span>: </span>
+                @Html.DisplayFor(modelItem => item.Category)<br />
+
+                <span class="name-style">@Html.DisplayNameFor(model => model.SkinType)</span>
+                <span>: </span>
+                @Html.DisplayFor(modelItem => item.SkinType)<br />
+
+                @Html.ActionLink("Edit", "EditSkinProducts", new { id = item.Id , idSpecialist = ViewBag.SpecialistId }) ||
+                @Html.ActionLink("Delete", "DeleteSkinProduct", new { id = item.Id , idSpecialist = ViewBag.SpecialistId }) ||
+                @Html.ActionLink("Details", "DetailsSkinProduct", new { id = item.Id , idSpecialist = ViewBag.SpecialistId })
+            </td>
+            count++;
+        }
+</tr>
+</table>

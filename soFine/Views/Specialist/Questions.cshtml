@@ -1,0 +1,81 @@
+﻿@model List<soFine.Models.Question>
+@{
+    ViewBag.Title = "Questions";
+    Layout = "~/Views/Specialist/Layout2.cshtml";
+    SoFineDB db = new SoFineDB();
+}
+
+<style>
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content:center;
+      
+    }
+
+    .card {
+        margin-top: 10px;
+    }
+</style>
+
+
+<div class="container">
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3 class="text-uppercase text-center mb-5">Users' questions</h3>
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-success">@TempData["Message"]</div>
+            }
+            <div class="col-sm-20">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+
+                    soFine.Models.UserAccount user = db.UserAccounts.Find(Model[i].IdUser);
+
+
+                    <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
+
+
+                        <h5>@user.FirstName asked:</h5>
+                        <h5>@Model[i].QuestionText</h5>
+
+                        @using (Html.BeginForm("Questions", "Specialist", new { id = ViewBag.SpecialistId }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            @Html.Hidden("questionIndex", i)
+                            @Html.Hidden("questionId", Model[i].Id)
+                            <div class="form-group">
+
+                                @Html.LabelFor(Model => Model[i].AnswerText, htmlAttributes: new { @class = "control-label" })
+                                <div class="col-md-20">
+                                    @Html.EditorFor(Model => Model[i].AnswerText, new { htmlAttributes = new { @class = "form-control", name = string.Format("Questions[{0}].AnswerText", i) } })
+                                    @Html.ValidationMessageFor(Model => Model[i].AnswerText, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div>
+                                <h6>@user.FirstName's details:</h6>
+                                <h6>Skin type: @user.SkinType</h6>
+                                <h6>Hair type: @user.HairType</h6>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Send" class="btn btn-primary" name="submitButton" />
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                }
+            </div>
+        </div>
+        </div>
+    </div>
+

@@ -1,0 +1,140 @@
+﻿@model soFine.Models.UserAccount
+@{
+    Layout = "~/Views/User/Layout2.cshtml";
+}
+@{
+    ViewBag.Title = "EditAccount";
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+}
+
+<style>
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content:center;
+    }
+    .box {
+        width: 500px;
+        height: 800px;
+        border: 2px solid #bc8f8f;
+        margin-top: 10px;
+        margin-right: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="box">
+            <h2 class="text-uppercase text-center mb-5">Edit the account</h2>
+            <form>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-20">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label " })
+                    <div class="col-md-20">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label " })
+                    <div class="col-md-20">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label " })
+                    <div class="col-md-20">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control password-input", type = "password" } })
+                        <button type="button" class="btn btn-default show-password">Show Password</button>
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <script>
+                    $(function () {
+                        $('.show-password').click(function () {
+                            var passwordInput = $('.password-input');
+                            if (passwordInput.attr('type') == 'password') {
+                                passwordInput.attr('type', 'text');
+                                $(this).text('Hide password');
+                            } else {
+                                passwordInput.attr('type', 'password');
+                                $(this).text('Show password');
+                            }
+                        });
+                    });
+                </script>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SkinType, htmlAttributes: new { @class = "control-label " })
+                    <div class="col-md-20">
+                        <select id="skin-type" name="SkinType">
+
+                            @foreach (string skinType in ViewBag.SkinTypes)
+                            {
+                                <option value="@skinType">@skinType</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.HairType, htmlAttributes: new { @class = "control-label " })
+                    <div class="col-md-20">
+                        <select id="hair-type" name="HairType">
+
+                            @foreach (string hairType in ViewBag.HairTypes)
+                            {
+                                <option value="@hairType">@hairType</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-20">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </div>
+
+                <div>
+                    @Html.ActionLink("Go Back", "FirstPage", new { id = Model.Id })
+                </div>
+                @if (TempData["Message"] != null)
+                {
+                    <div class="alert alert-success">@TempData["Message"]</div>
+                }
+
+            </form>
+        </div>
+
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
